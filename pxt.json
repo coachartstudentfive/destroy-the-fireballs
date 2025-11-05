@@ -1,5 +1,6 @@
 {
     "name": "Destroy the Fireballs",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
         "device": "*"

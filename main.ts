@@ -6,12 +6,12 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     ball_count += 1
-    if (ball_count > 3) {
+    if (ball_count > 10) {
         game.splash("CAN'T SPAWN MORE BALLS")
     } else {
         ball_vy = 20
         ball_vx = 20
-        ball = sprites.create(assets.image`fireball`, SpriteKind.Projectile)
+        ball = sprites.create(assets.image`meteroite`, SpriteKind.Projectile)
         ball.top = 1
         ball.setStayInScreen(true)
         ball.setBounceOnWall(true)
@@ -25,13 +25,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.border, function (sprite, ot
     if (info.score() > high_score) {
         high_score = info.score()
     }
-    info.setScore(0)
     info.changeLifeBy(-1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
     ball.y += randint(-140, -220)
-    info.changeScoreBy(1)
+    info.changeScoreBy(2)
     if (info.score() % 5 == 0) {
         ball_vx += 5
         ball_vy += 5
@@ -40,7 +39,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 info.onLifeZero(function () {
     game.splash("Your high score was", high_score)
-    game.setGameOverMessage(false, "GAME OVER!")
+    game.setGameOverMessage(false, "GAME OVER! TRY AGAIN?")
     game.gameOver(false)
 })
 let high_score = 0
@@ -49,6 +48,7 @@ let ball_vx = 0
 let ball_vy = 0
 let ball_count = 0
 ball_count = 0
+let currentlevel = 0
 info.setLife(3)
 scene.setBackgroundImage(assets.image`BACKGROUND`)
 info.setScore(0)
